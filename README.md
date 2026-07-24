@@ -87,7 +87,7 @@ To pull from the cache instead of building, add the substituter to your user/sys
 
 ```
 extra-substituters = https://rtk.cachix.org
-extra-trusted-public-keys = rtk.cachix.org-1:<public-key>
+extra-trusted-public-keys = rtk.cachix.org-1:YXdWe1jb6i0KAPXwHFT71ALd04lMkMVFNjpY6vKcSbM=
 ```
 
 Or, if you're consuming this as a flake input and have `accept-flake-config = true` set
@@ -98,12 +98,13 @@ consumers of *your* flake pick it up too:
 {
   nixConfig = {
     extra-substituters = [ "https://rtk.cachix.org" ];
-    extra-trusted-public-keys = [ "rtk.cachix.org-1:<public-key>" ];
+    extra-trusted-public-keys = [ "rtk.cachix.org-1:YXdWe1jb6i0KAPXwHFT71ALd04lMkMVFNjpY6vKcSbM=" ];
   };
 }
 ```
 
-Either way, get the current public key with `cachix use rtk`.
+To verify that key against the cache itself, run `cachix use rtk`, or read it
+straight from the API: `curl -s https://cachix.org/api/v1/cache/rtk`.
 
 ## Configuration / API
 
