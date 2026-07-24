@@ -12,9 +12,11 @@ jobs:
         include:
           - os: ubuntu-latest
             system: x86_64-linux
-          - os: macos-13
+          # macos-15-intel is the last x86_64 image Actions will offer
+          # (available until August 2027); macos-13 was retired 2025-12-08.
+          - os: macos-15-intel
             system: x86_64-darwin
-          - os: macos-14
+          - os: macos-15
             system: aarch64-darwin
     runs-on: ${{ matrix.os }}
     steps:
