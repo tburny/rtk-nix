@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -12,6 +13,8 @@ jobs:
         include:
           - os: ubuntu-latest
             system: x86_64-linux
+          - os: ubuntu-24.04-arm
+            system: aarch64-linux
           # macos-15-intel is the last x86_64 image Actions will offer
           # (available until August 2027); macos-13 was retired 2025-12-08.
           - os: macos-15-intel
@@ -22,7 +25,17 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # The Determinate installer refuses to run on Intel macOS and only
+      # limps along by auto-pinning itself to its last Intel-capable
+      # release, so that one system uses the classic installer instead.
       - uses: DeterminateSystems/nix-installer-action@main
+        if: matrix.system != 'x86_64-darwin'
+
+      - uses: cachix/install-nix-action@v31
+        if: matrix.system == 'x86_64-darwin'
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
 
       - uses: cachix/cachix-action@v15
         with:
@@ -45,12 +58,3 @@ jobs:
           # such setting and the same `devenv test` passes there.
           extra-conf: lazy-trees = false
       - run: nix run nixpkgs#devenv -- test --override-dotfile
-
-  eval-aarch64-linux:
-    # No native aarch64-linux runner; at least catch flake-eval and
-    # hash-format errors for that system without building it.
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: DeterminateSystems/nix-installer-action@main
-      - run: nix eval .#packages.aarch64-linux.default.drvPath
