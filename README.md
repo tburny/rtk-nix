@@ -151,9 +151,18 @@ below if you're an rtk maintainer.
 This repo was created by [@tburny](https://github.com/tburny) to solve a personal binary-cache
 problem across several downstream projects. It's deliberately self-contained (own repo, own
 Cachix cache, own CI) so it can be handed over to or adopted by the rtk maintainers (`rtk-ai`)
-once it's proven out, rather than staying a permanent third-party dependency. If you're an rtk
-maintainer reading this and want to fold packaging in-tree, please open an issue — happy to
-transfer.
+once it's proven out, rather than staying a permanent third-party dependency.
+
+Folding Nix packaging in-tree is already under discussion upstream in
+[rtk-ai/rtk#457](https://github.com/rtk-ai/rtk/issues/457) ("Would you accept a nix config?"),
+with [rtk-ai/rtk#609](https://github.com/rtk-ai/rtk/pull/609) open against it. That PR builds
+rtk from source with `rustPlatform.buildRustPackage`; this repo deliberately takes the other
+approach — fetching the prebuilt release binaries — so the two answer different questions and
+are complementary rather than competing. An in-tree source build tracks the working tree at any
+commit, which a release-pinned flake cannot; a prebuilt flake with a binary cache spares every
+consumer a Rust toolchain, which an uncached source build cannot. Either could supersede this
+repo. If you're an rtk maintainer and want to adopt this packaging, please open an issue —
+happy to transfer.
 
 ## Licensing
 
