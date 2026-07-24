@@ -36,6 +36,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          # Determinate Nix enables lazy-trees, under which devenv's shell eval
+          # walks into nixpkgs' minimal-bootstrap chain and dies on
+          # "path '/nix/store/...-ldexpl.c' is not valid". Upstream Nix has no
+          # such setting and the same `devenv test` passes there.
+          extra-conf: lazy-trees = false
       - run: nix run nixpkgs#devenv -- test --override-dotfile
 
   eval-aarch64-linux:
