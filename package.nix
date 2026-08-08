@@ -7,26 +7,26 @@
 }:
 
 let
-  version = "0.43.0";
+  version = "0.45.0";
 
   # Map Nix system -> upstream release asset name + content hash.
   # Regenerate with ./update.sh (see README) when bumping `version`.
   assets = {
     x86_64-linux = {
       name = "rtk-x86_64-unknown-linux-musl.tar.gz";
-      hash = "sha256-/4oed2ZJbhdSkaha7KHcl8n/bfM+UeWJPR+8eP6ipgk=";
+      hash = "sha256-xMA2+/GB/FXvMpeGyMF+DUJ5crBTuCWUTZaKaq/vG6Q=";
     };
     aarch64-linux = {
       name = "rtk-aarch64-unknown-linux-gnu.tar.gz";
-      hash = "sha256-VRn3yhLlwUOmCfDSigp3uXQTqNzjHCaB8aQcJFGahzE=";
+      hash = "sha256-gKdG3TBe+UT/UO8BGuTOOHjdW6iN/jXYWdBUmBkWN8M=";
     };
     x86_64-darwin = {
       name = "rtk-x86_64-apple-darwin.tar.gz";
-      hash = "sha256-qF9g4mN4Eb5oNmIIuNi5xbobdIy130R3qyDNc9PF2fg=";
+      hash = "sha256-nqAviJ1aJ3nk+3AN9Fh4JDA8WlfNoi6QPjAFgHn8oO8=";
     };
     aarch64-darwin = {
       name = "rtk-aarch64-apple-darwin.tar.gz";
-      hash = "sha256-ihfkmsvTeJl+sh0Otvf4YREfNbT8mxx07fTHRI5XbGU=";
+      hash = "sha256-BkFRz8LVCyTYELBqCvLkG5yUXoNTTkxDjD0+rmB/w/Q=";
     };
   };
 
